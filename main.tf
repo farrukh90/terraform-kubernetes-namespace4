@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "example" {
 resource "kubernetes_limit_range" "example" {
   metadata {
     name = "resource-limit"
-    namespace = var.name
+    namespace = kubernetes_namespace.example.metadata[0].name
   }
   spec {
     limit {
@@ -36,7 +36,7 @@ resource "kubernetes_limit_range" "example" {
 resource "kubernetes_resource_quota" "example" {
   metadata {
     name = "terraform-example"
-    namespace = var.name
+    namespace = kubernetes_namespace.example.metadata[0].name
   }
   spec {
     hard = {
